@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+
+    	<record id="approver_email_template" model="mail.template">
+		    <field name="name">Approver Email Template</field>
+		    <field name="model_id" ref="purchase_request.model_purchase_request"/>
+		    <!-- <field name="auto_delete" eval="True"/> -->
+		    <field name="email_from">${(object.requested_by.email_formatted or user.email_formatted) | safe}</field>
+		    <field name="email_to">${object.assigned_to.partner_id.email}</field>
+		    <field name="subject">${object.name}</field>
+		    <field name="body_html"><![CDATA[
+		 <p>Bonjour Monsieur ${(object.assigned_to.name)},<br/><br/>
+		Une nouvelle demande de sous-traitant ${(object.name)} est crée.<br/>lien vers la demande : <br/><form action="http://localhost:8069/web?debug=1#id=${(object.id)}&action=528&model=purchase.request&view_type=form&cids=1%2C2%2C3%2C4&menu_id=361">
+    <input type="submit" value="Lien demande" />
+</form><br/></p>
+		      Cordialement,<br/>
+		      ${(object.company_id.name)} ]]></field>
+		</record>
+
+    </data>
+</odoo>
